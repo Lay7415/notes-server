@@ -1,7 +1,7 @@
 class UserController {
     async registration(req, res, next) {
         try {
-            
+
         } catch (error) {
             console.error(error)
         }
