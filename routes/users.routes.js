@@ -1,11 +1,32 @@
-const {Router} = require('express')
-const userController = require('../controllers/user.controller')
+const { Router } = require("express");
+const { body, validationResult } = require("express-validator");
+const userController = require("../controllers/user.controller");
+const authorizationMiddleware = require("../middlewares/authorization_middleware");
 
-const usersRouter = Router()
+const usersRouter = Router();
 
-usersRouter.post('/user/registration', userController.registration)
-usersRouter.post('/user/login', userController.login)
-usersRouter.get('/user/refresh', userController.refresh)
-usersRouter.post('/user/logout', userController.logout)
+usersRouter.post(
+  "/user/registration",
+  [
+    body("email").isEmail().withMessage("Неверный формат электронной почты"),
+    body("password")
+      .isLength({ min: 6 })
+      .withMessage("Пароль должен содержать минимум 6 символов"),
+  ],
+  userController.registration
+);
 
-module.exports = usersRouter
+usersRouter.post(
+  "/user/login",
+  [
+    body("email").isEmail().withMessage("Неверный формат электронной почты"),
+    body("password")
+      .isLength({ min: 6 })
+      .withMessage("Пароль должен содержать минимум 6 символов"),
+  ],
+  userController.login
+);
+
+usersRouter.get("/user/refresh",authorizationMiddleware, userController.refresh);
+
+module.exports = usersRouter;
