@@ -28,5 +28,6 @@ usersRouter.post(
 );
 
 usersRouter.get("/user/refresh",authorizationMiddleware, userController.refresh);
+usersRouter.delete('/user/delete',authorizationMiddleware, userController.deleteAccount)
 
 module.exports = usersRouter;
