@@ -54,7 +54,6 @@ class NoteController {
     const note = await PgService.request(
       `DELETE FROM notes WHERE area_id = #${area_id}# AND user_id = #${user_id}# AND id = #${id}#`
     );
-    console.log(note);
     if (!note.rowCount) {
       return next(ApiError.internal("ошибка при удалении"));
     }

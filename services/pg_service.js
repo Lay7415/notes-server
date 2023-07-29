@@ -23,7 +23,6 @@ class PgService {
           return item;
         })
         .join(" ");
-      console.log(queryText, values);
       const request = pool.query(queryText, values);
       return request;
     } catch (error) {
